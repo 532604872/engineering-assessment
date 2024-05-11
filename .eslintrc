@@ -2,10 +2,19 @@
   "extends": "eslint:recommended",
   "parserOptions": {
     "ecmaVersion": 6,
-    "sourceType": "script"
+    "sourceType": "module"
   },
   "env": {
     "node": true,
-    "es6": true
+    "es6": true,
+    "browser": true,
+    "commonjs": true
+  },
+  "plugins": [
+    "react",
+    "react-hooks"
+  ],
+  "rules": {
+
   }
 }

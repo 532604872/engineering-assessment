@@ -28,18 +28,20 @@ fs.createReadStream(filePath)
 
 // 获取行数据
 function getFinedResultes(id) {
-  const res = id ? results.find(o => o.locationid === id) : 'not found id:' + id
-  return id ? res : results
+  const res = results.find(o => o.locationid === id)
+  return res ? [res] : []
 }
 
 
 const imagesRouter = new Router();
+
+// 根据ID查询
 imagesRouter.get('/getQueryCSV/:id', (ctx) => {
   const { id } = ctx.params;
 
   try {
     // 读取id数据
-    const data = getFinedResultes(id);
+    const data = id ? getFinedResultes(id) : [];
 
     // 设置响应头
     ctx.type = 'application/json';
@@ -49,6 +51,54 @@ imagesRouter.get('/getQueryCSV/:id', (ctx) => {
       code: 0,
       message: 'success',
       results: data
+    };
+  } catch (error) {
+    ctx.status = 404;
+    ctx.body = 'not found';
+  }
+})
+
+// 分页查询
+imagesRouter.post('/getQueryCSV', (ctx) => {
+  const { page, pageSize } = ctx.request.body;
+
+  try {
+    const offset = (page - 1) * pageSize;
+    const limit = pageSize;
+
+    const result = results.slice(offset, offset + limit);
+
+    // 设置响应头
+    ctx.type = 'application/json';
+
+    // 发送返回值
+    ctx.body = {
+      code: 0,
+      message: 'success',
+      result: {
+        page,
+        pageSize,
+        results: result,
+        totalNum: results.length
+      }
+    };
+  } catch (error) {
+    ctx.status = 404;
+    ctx.body = 'not found';
+  }
+})
+
+// 获取全部数据
+imagesRouter.get('/getQueryCSVAll', (ctx) => {
+  try {
+    // 设置响应头
+    ctx.type = 'application/json';
+
+    // 发送返回值
+    ctx.body = {
+      code: 0,
+      message: 'success',
+      results: results
     };
   } catch (error) {
     ctx.status = 404;

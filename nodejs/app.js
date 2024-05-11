@@ -1,7 +1,14 @@
+/**
+ * @Description: nodejs
+ * @Author: zero
+ * @Date: 2024-05-11 12:29:22
+ * @LastEditors: zero
+ * @LastEditTime: 2024-05-11 12:29:22
+*/
 const Koa = require('koa');
 const BodyParser = require('koa-bodyparser');
 const cors = require('koa2-cors');
-const { router } = require('./router');
+const { router } = require('./router/app');
 
 const app = new Koa();
 const bodyParser = new BodyParser();

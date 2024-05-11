@@ -1,0 +1,8 @@
+// 最小高度计算，小屏幕去除滚动条高度
+.countMinHeight(@height) {
+  min-height: calc(100vh - @height);
+
+  @media all and (max-width: 1200px) {
+    min-height: calc(100vh - @height - 20px);
+  }
+}
