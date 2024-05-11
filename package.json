@@ -4,8 +4,8 @@
   "description": "node",
   "main": "index.js",
   "scripts": {
-    "start": "node src/app.js",
-    "lint": "eslint --fix --ext .js src"
+    "start": "node nodejs/src/app.js",
+    "lint": "eslint --fix --ext .js nodejs/src"
   },
   "husky": {
     "hooks": {
