@@ -29,7 +29,7 @@ export default function App(p) {
       pageSize: 10,
     }
     new Promise(((resolve, reject) => {
-      axios.post('http://localhost:5001/getQueryCSV', params).then(res => {
+      axios.post('http://localhost:5001/postQueryCSV', params).then(res => {
         console.log(res)
         res.status === 200 ? resolve(res.data.result) :reject(res.data)
       }).catch(reject)

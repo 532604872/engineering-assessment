@@ -32,11 +32,17 @@ function getFinedResultes(id) {
   return res ? [res] : []
 }
 
+// 异常处理
+function errorCollect(ctx) {
+  ctx.status = 404;
+  ctx.body = 'not found';
+}
+
 
 const imagesRouter = new Router();
 
 // 根据ID查询
-imagesRouter.get('/getQueryCSV/:id', (ctx) => {
+/*imagesRouter.get('/getQueryCSV/:id', (ctx) => {
   const { id } = ctx.params;
 
   try {
@@ -53,13 +59,12 @@ imagesRouter.get('/getQueryCSV/:id', (ctx) => {
       results: data
     };
   } catch (error) {
-    ctx.status = 404;
-    ctx.body = 'not found';
+    errorCollect(ctx)
   }
-})
+})*/
 
 // 分页查询
-imagesRouter.post('/getQueryCSV', (ctx) => {
+imagesRouter.post('/postQueryCSV', (ctx) => {
   const { page, pageSize } = ctx.request.body;
 
   try {
@@ -83,14 +88,18 @@ imagesRouter.post('/getQueryCSV', (ctx) => {
       }
     };
   } catch (error) {
-    ctx.status = 404;
-    ctx.body = 'not found';
+    errorCollect(ctx)
   }
 })
 
 // 获取全部数据
-imagesRouter.get('/getQueryCSVAll', (ctx) => {
+imagesRouter.get('/getQueryCSV', (ctx) => {
+  const { id } = ctx.query
+
   try {
+    // 读取id数据
+    const data = id ? getFinedResultes(id) : results;
+
     // 设置响应头
     ctx.type = 'application/json';
 
@@ -98,11 +107,10 @@ imagesRouter.get('/getQueryCSVAll', (ctx) => {
     ctx.body = {
       code: 0,
       message: 'success',
-      results: results
+      results: data
     };
   } catch (error) {
-    ctx.status = 404;
-    ctx.body = 'not found';
+    errorCollect(ctx)
   }
 })
 

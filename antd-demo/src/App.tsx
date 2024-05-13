@@ -32,7 +32,7 @@ function App() {
     if (tabLoading) return
     setTabLoading(true)
     new Promise(((resolve, reject) => {
-      axios.get('http://localhost:5001/getQueryCSVAll').then(res => {
+      axios.get('http://localhost:5001/getQueryCSV').then(res => {
         console.log(res)
         res.status === 200 ? resolve(res.data.results) :reject(res.data)
       }).catch(reject)
@@ -48,7 +48,7 @@ function App() {
     if (loading) return
     setLoading(true)
     new Promise(((resolve, reject) => {
-      axios.get('http://localhost:5001/getQueryCSV/' + id).then(res => {
+      axios.get('http://localhost:5001/getQueryCSV?id=' + id).then(res => {
         console.log(res)
         res.status === 200 ? resolve(res.data.results) :reject(res.data)
       }).catch(reject)
