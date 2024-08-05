@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {Button, Space, DatePicker, version, Layout, Input, message} from 'antd';
@@ -13,28 +13,6 @@ function App() {
   const [loading, setLoading] = useState(false) // 按钮 loading
   const [tabLoading, setTabLoading] = useState(false) // 表格 loading
   const [data, setData] =  useState(originData) // 表格数据
-
-  const [cunt, setCunt] = useState(0)
-
-  function log() {
-    console.log('****')
-  }
-
-  useEffect(() => { // 打印三次
-    log()
-  }, [cunt])
-
-  /*function add() { // 结果为 1
-    setCunt(cunt + 1)
-    setCunt(cunt + 1)
-    setCunt(cunt + 1)
-  }
-  */
-  const add  = useCallback(() => { // 结果为 1
-    setCunt(cunt + 1)
-    setCunt(cunt + 1)
-    setCunt(cunt + 1)
-  }, [cunt])
 
   useEffect(() => {
     fetchQueryCSVAll()
@@ -89,20 +67,18 @@ function App() {
 
       <Layout>
         <h1>antd version: {version}</h1>
-        <h2>cunt: {cunt}</h2>
         <Space direction="vertical" size="middle" style={{ display: 'flex' }}>
           <Space>
             <DatePicker />
             <Input placeholder="locationid search" onChange={(e: any) => setId(e.target.value.trim())}/>
             <Button type="primary" onClick={debounce(handleSearch, 500)} loading={loading}>查询</Button>
-
-            <Button type="primary" onClick={debounce(add, 500)} loading={loading}>加1</Button>
           </Space>
           <Table
             dataSource={data}
             loading={tabLoading}
           />
         </Space>
+
       </Layout>
     </div>
   );
